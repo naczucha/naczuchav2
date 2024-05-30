@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Europy</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+        .info {
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            max-width: 300px;
+        }
+        .attraction {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Inicjalizacja mapy
+        var map = L.map('map').setView([54.5260, 15.2551], 4);
+
+        // Dodanie warstwy mapy OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Przykładowe dane
+        var locations = [
+            {
+                name: "Warszawa",
+                lat: 52.2297,
+                lon: 21.0122,
+                type: "stolica",
+                info: "Stolica Polski",
+                attractions: [
+                    "Zamek Królewski",
+                    "Łazienki Królewskie",
+                    "Muzeum Powstania Warszawskiego"
+                ]
+            },
+            {
+                name: "Berlin",
+                lat: 52.5200,
+                lon: 13.4050,
+                type: "stolica",
+                info: "Stolica Niemiec",
+                attractions: [
+                    "Brama Brandenburska",
+                    "Muzeum Pergamońskie",
+                    "Reichstag"
+                ]
+            },
+            {
+                name: "Paryż",
+                lat: 48.8566,
+                lon: 2.3522,
+                type: "stolica",
+                info: "Stolica Francji",
+                attractions: [
+                    "Wieża Eiffla",
+                    "Luwr",
+                    "Katedra Notre-Dame"
+                ]
+            },
+            {
+                name: "Rzym",
+                lat: 41.9028,
+                lon: 12.4964,
+                type: "stolica",
+                info: "Stolica Włoch",
+                attractions: [
+                    "Koloseum",
+                    "Panteon",
+                    "Watykan"
+                ]
+            },
+            {
+                name: "Madryt",
+                lat: 40.4168,
+                lon: -3.7038,
+                type: "stolica",
+                info: "Stolica Hiszpanii",
+                attractions: [
+                    "Pałac Królewski",
+                    "Muzeum Prado",
+                    "Park Retiro"
+                ]
+            },
+            {
+                name: "Londyn",
+                lat: 51.5074,
+                lon: -0.1278,
+                type: "stolica",
+                info: "Stolica Wielkiej Brytanii",
+                attractions: [
+                    "Big Ben",
+                    "Tower of London",
+                    "Pałac Buckingham"
+                ]
+            },
+            {
+                name: "Amsterdam",
+                lat: 52.3676,
+                lon: 4.9041,
+                type: "stolica",
+                info: "Stolica Holandii",
+                attractions: [
+                    "Muzeum Van Gogha",
+                    "Dom Anny Frank",
+                    "Rijksmuseum"
+                ]
+            },
+            {
+                name: "Wiedeń",
+                lat: 48.2082,
+                lon: 16.3738,
+                type: "stolica",
+                info: "Stolica Austrii",
+                attractions: [
+                    "Pałac Schönbrunn",
+                    "Katedra św. Szczepana",
+                    "Muzeum Historii Sztuki"
+                ]
+            },
+            {
+                name: "Lizbona",
+                lat: 38.7223,
+                lon: -9.1393,
+                type: "stolica",
+                info: "Stolica Portugalii",
+                attractions: [
+                    "Wieża Belem",
+                    "Klasztor Hieronimitów",
+                    "Oceanarium w Lizbonie"
+                ]
+            },
+            {
+                name: "Praga",
+                lat: 50.0755,
+                lon: 14.4378,
+                type: "stolica",
+                info: "Stolica Czech",
+                attractions: [
+                    "Most Karola",
+                    "Zamek Praski",
+                    "Katedra św. Wita"
+                ]
+            },
+            {
+                name: "Budapeszt",
+                lat: 47.4979,
+                lon: 19.0402,
+                type: "stolica",
+                info: "Stolica Węgier",
+                attractions: [
+                    "Parlament",
+                    "Baszta Rybacka",
+                    "Łaźnie Széchenyi"
+                ]
+            },
+            {
+                name: "Kopenhaga",
+                lat: 55.6761,
+                lon: 12.5683,
+                type: "stolica",
+                info: "Stolica Danii",
+                attractions: [
+                    "Nyhavn",
+                    "Mała Syrenka",
+                    "Pałac Christiansborg"
+                ]
+            },
+            {
+                name: "Ateny",
+                lat: 37.9838,
+                lon: 23.7275,
+                type: "stolica",
+                info: "Stolica Grecji",
+                attractions: [
+                    "Akropol",
+                    "Partenon",
+                    "Agora"
+                ]
+            },
+            {
+                name: "Oslo",
+                lat: 59.9139,
+                lon: 10.7522,
+                type: "stolica",
+                info: "Stolica Norwegii",
+                attractions: [
+                    "Park Vigelanda",
+                    "Muzeum Statków Wikingów",
+                    "Opera w Oslo"
+                ]
+            },
+            {
+                name: "Sztokholm",
+                lat: 59.3293,
+                lon: 18.0686,
+                type: "stolica",
+                info: "Stolica Szwecji",
+                attractions: [
+                    "Muzeum Vasa",
+                    "Gamla Stan",
+                    "Pałac Królewski"
+                ]
+            },
+            {
+                name: "Bruksela",
+                lat: 50.8503,
+                lon: 4.3517,
+                type: "stolica",
+                info: "Stolica Belgii",
+                attractions: [
+                    "Atomium",
+                    "Manneken Pis",
+                    "Grand Place"
+                ]
+            },
+            {
+                name: "Zurych",
+                lat: 47.3769,
+                lon: 8.5417,
+                type: "miasto",
+                info: "Największe miasto Szwajcarii",
+                attractions: [
+                    "Jezioro Zuryskie",
+                    "Bahnhofstrasse",
+                    "Stare Miasto"
+                ]
+            },
+            {
+                name: "Dublin",
+                lat: 53.3498,
+                lon: -6.2603,
+                type: "stolica",
+                info: "Stolica Irlandii",
+                attractions: [
+                    "Guinness Storehouse",
+                    "Katedra św. Patryka",
+                    "Trinity College"
+                ]
+            }
+        ];
+
+        // Dodanie markerów na mapę
+        locations.forEach(function(location) {
+            var marker = L.marker([location.lat, location.lon]).addTo(map);
+            var popupContent = '<div class="info"><strong>' + location.name + '</strong><br>' + location.info;
+            if (location.attractions.length > 0) {
+                popupContent += '<br><br><strong>Atrakcje:</strong><ul>';
+                location.attractions.forEach(function(attraction) {
+                    popupContent += '<li>' + attraction + '</li>';
+                });
+                popupContent += '</ul>';
+            }
+            popupContent += '</div>';
+            marker.bindPopup(popupContent);
+            
+            if (location.type === 'atrakcja') {
+                marker.getElement().classList.add('attraction');
+            }
+        });
+    </script>
+</body>
+</html>
